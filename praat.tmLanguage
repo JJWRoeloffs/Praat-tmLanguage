@@ -310,7 +310,7 @@
       <key>comments</key>
       <dict>
         <key>begin</key>
-        <string>(^|\s|\t|\b)(#|;)</string>
+        <string>;|^[\s]*#</string>
         <key>end</key>
         <string>$</string>
         <key>beginCaptures</key>
@@ -341,7 +341,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>keyword.variable.language.praat</string>
+                <string>support.function.praat</string>
               </dict>
             </dict>
             <key>name</key>
@@ -498,10 +498,38 @@
           </dict>
         </array>
       </dict>
+      <key>proc-callsite</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(\b|\s|\t)*?(@)([a-z][a-zA-Z0-9_]+)(\:)?(\b|\s)?</string>
+            <key>captures</key>
+            <dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.function.praat</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>support.function.praat</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>support.function.praat</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
       <key>class-builtin</key>
       <dict>
         <key>match</key>
-        <string>\b((Long)?Sound|Text(Grid|Tier)|Formant(Grid)?|Strings|all|Intensity(Tier)?|Pitch(Tier)?|PointProcess|Table(OfReal)?|Matrix|Polygon|Distributions|PairDistribution|Permutation|ParamCurve|Harmonicity|Electroglottogram|Spectrum|Ltas|LPC|Cepstrum|(LF|MF)?CC|Excitation(s)?|Cochleagram|Manipulation|Duration(Tier)?|Speaker|Articulation|VocalTract|FFNet|PatternList|Categories|Eigen|Polynomial|Roots|ChebyshevSeries|LegendreSeries|(I|M)Spline|Covariance|Confusion|Discriminant|ExperimentMFC|PCA|Correlation|ClassificationTable|SSCP|DTW|Configuration|Dissimilarity|Similarity|Distance|ScalarProduct|ContingencyTable|OTGrammar|WordList|SpellingChecker)\b</string>
+        <string>\b((Long)?Sound|Text(Grid|Tier)|Formant(Filter|Grid|Point|Tier)?|Strings|all|Intensity(Tier)?|Pitch(Tier)?|PointProcess|Table(OfReal)?|Matrix|Polygon|Distributions|PairDistribution|Permutation|ParamCurve|Harmonicity|Electroglottogram|Spectrum|Ltas|LPC|Cepstrum|(LF|MF)?CC|Excitation(s)?|Cochleagram|Manipulation|Duration(Tier)?|Speaker|Articulation|VocalTract|FFNet|Pattern(List)?|Categories|Eigen|Polynomial|Roots|ChebyshevSeries|LegendreSeries|(I|M)Spline|Covariance|Confusion|Discriminant|ExperimentMFC|PCA|Correlation|ClassificationTable|SSCP|DTW|Configuration|Dissimilarity|Similarity|Distance|ScalarProduct|ContingencyTable|OTGrammar|WordList|SpellingChecker|Activation|AffineTransform|AmplitudeTier|AutoSegment|BarkFilter|CCA|Cepstrumc|Collection|Corpus|CrossCorrelationTable(s)?|Diagonalizer|EEG|ERP|ERPTier|Excitation|Excitations|FeatureWeights|GaussianMixture|HMM(_Observation|_ObservationSequence|HMM_State|HMM_StateSequence)?|Index|Klatt(Grid|Table)|KNN|Label|LinearRegression|LogisticRegression|ManPages|MelFilter|MixingMatrix|Movie|OT(History|Multi)|Photo|Procrustes|Real(Point|Tier)|ResultsMFC|Salience|SimpleString|SortedSetOfString|Sound|Spectrogram|SpectrumTier|SpeechSynthesizer|SPINET|StringsIndex|SVD|Interpolate|Smooth)\b</string>
         <key>name</key>
         <string>support.class.builtin.praat</string>
       </dict>
@@ -522,7 +550,7 @@
       <key>sound-draw-function</key>
       <dict>
         <key>match</key>
-        <string>\b(Draw( where)?|Paint (where|enclosed))\b</string>
+        <string>\b(Draw( where|line|(confidence ellipses)|(scatter plot))?|Paint (where|enclosed))\b</string>
         <key>name</key>
         <string>support.function.praat</string>
       </dict>
@@ -533,10 +561,31 @@
         <key>name</key>
         <string>support.function.praat</string>
       </dict>
+      <key>sound-frame-query-function</key>
+      <dict>
+        <key>match</key>
+        <string>\b(Get ((frame number from time)|(time from frame number)|(value in frame)))</string>
+        <key>name</key>
+        <string>support.function.praat</string>
+      </dict>
       <key>sound-modify-function</key>
       <dict>
         <key>match</key>
         <string>\b(Shift times (by|to)|Scale (peak|intensity|times (by|to))|Reverse|Formula( \(part\))?|Add|Subtract mean|Multiply( by window)?|Set (value at sample number|part to zero)|Override sampling frequency|Pre-emphasize \(in-place\)|De-emphasize \(in-place\))</string>
+        <key>name</key>
+        <string>support.function.praat</string>
+      </dict>
+      <key>drawing-function</key>
+      <dict>
+        <key>match</key>
+        <string>\b((Erase all)|Axes|(Marks (top|right|bottom|left))|((Dotted|Solid) line)|(One mark (top|right|bottom|left)))</string>
+        <key>name</key>
+        <string>support.function.praat</string>
+      </dict>
+      <key>drawing-colors</key>
+      <dict>
+        <key>match</key>
+        <string>\b((Black|black|Blue|blue|Cyan|cyan|Green|green|Grey|grey|Lime|lime|Magenta|magenta|Maroon|maroon|Navy|navy|Olive|olive|Pink|pink|Purple|purple|Red|red|Silver|silver|Teal|teal|White|white|Yellow|yellow))</string>
         <key>name</key>
         <string>support.function.praat</string>
       </dict>
@@ -572,6 +621,13 @@
       <dict>
         <key>match</key>
         <string>(\s)*?\b(Combine (to stereo|into Sound(List|Set))|Concatenate( recoverably| with overlap)?|Convolve|Cross\-correlate|To (CrossCorrelationTable \(combined\)|DTW|ParamCurve))</string>
+        <key>name</key>
+        <string>support.function.praat</string>
+      </dict>
+      <key>textgrid-basic-function</key>
+      <dict>
+        <key>match</key>
+        <string>(\s)*?\b(((Insert|Remove|Duplicate) (point |interval )?tier)|(Set tier name))</string>
         <key>name</key>
         <string>support.function.praat</string>
       </dict>
@@ -641,7 +697,7 @@
       <key>file-function</key>
       <dict>
         <key>match</key>
-        <string>(\s)*?\b(fileReadable|readFile(\$)?|createFolder|deleteFile|fileNames\$\#)(\b|\s)</string>
+        <string>(\s)*?\b(fileReadable|readFile(\$)?|createFolder|createDirectory|deleteFile|fileNames\$\#)(\b|\s)</string>
         <key>name</key>
         <string>support.function.string.praat</string>
       </dict>
@@ -661,7 +717,7 @@
       <key>other-save-function</key>
       <dict>
         <key>match</key>
-        <string>(\s)*?\b((Save as|Write to) ((short |chronological |matrix )?text|binary|headerless spreadsheet) file)\b</string>
+        <string>(\s)*?\b((Save as|Write to) ((short |chronological |matrix |raw )?text|binary|headerless spreadsheet) file)\b</string>
         <key>name</key>
         <string>support.function.string.praat</string>
       </dict>
@@ -688,7 +744,7 @@
       <key>types-builtin</key>
       <dict>
         <key>match</key>
-        <string>\b(real|positive|integer|natural|word|sentence|text|boolean|choice|button|comment|(in|out)file|folder|option(menu)?|(?i)hertz|(?i)mono|(?i)stereo)\b</string>
+        <string>\b(real|positive|integer|natural|word|sentence|text|boolean|choice|button|comment|(in|out)file|folder|option(menu)?|(?i)hertz|(?i)mono|(?i)stereo|optionMenu)\b</string>
         <key>name</key>
         <string>storage.type.praat</string>
       </dict>
@@ -961,7 +1017,19 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#sound-frame-query-function</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#sound-modify-function</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#drawing-function</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#drawing-colors</string>
           </dict>
           <dict>
             <key>include</key>
@@ -989,6 +1057,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#textgrid-basic-function</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#strings-function</string>
           </dict>
           <dict>
@@ -1002,6 +1074,10 @@
           <dict>
             <key>include</key>
             <string>#proc-declaration</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#proc-callsite</string>
           </dict>
           <dict>
             <key>include</key>
